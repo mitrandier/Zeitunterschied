@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختلاف ساعت ایران و آلمان</title>
+<style>
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    direction: rtl;
+    flex-direction: column;
+  }
+  h1 {
+    margin-bottom: 20px;
+  }
+  .clock-container {
+    display: flex;
+    gap: 50px;
+  }
+  .clock {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  .time {
+    font-size: 2.5rem;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <h1>⏰ اختلاف ساعت ایران و آلمان</h1>
+  <div class="clock-container">
+    <div class="clock">
+      <h2>🇮🇷 ایران (Tehran)</h2>
+      <div id="iran-time" class="time"></div>
+    </div>
+    <div class="clock">
+      <h2>🇩🇪 آلمان (Berlin)</h2>
+      <div id="germany-time" class="time"></div>
+    </div>
+  </div>
+
+<script>
+function updateClocks() {
+  const now = new Date();
+
+ 
+  const germanyTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Berlin" }));
+  const germanyHours = germanyTime.getHours().toString().padStart(2, "0");
+  const germanyMinutes = germanyTime.getMinutes().toString().padStart(2, "0");
+
+
+  const iranTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tehran" }));
+  const iranHours = iranTime.getHours().toString().padStart(2, "0");
+  const iranMinutes = iranTime.getMinutes().toString().padStart(2, "0");
+
+  document.getElementById("germany-time").textContent = `${germanyHours}:${germanyMinutes}`;
+  document.getElementById("iran-time").textContent = `${iranHours}:${iranMinutes}`;
+}
+
+setInterval(updateClocks, 1000);
+updateClocks();
+</script>
+</body>
+</html>
