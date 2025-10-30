@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اختلاف ساعت ایران و آلمان</title>
+<title>اختلاف ساعت ایران و آلمان | Zeitunterschied Iran und Deutschland</title>
 <style>
   body {
     font-family: 'Vazirmatn', sans-serif;
@@ -13,9 +13,15 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    direction: rtl;
     flex-direction: column;
+    transition: all 0.3s ease;
   }
+
+  body[lang="de"] {
+    direction: ltr;
+    font-family: 'Arial', sans-serif;
+  }
+
   h1 {
     margin-bottom: 20px;
   }
@@ -35,17 +41,33 @@
     margin-top: 10px;
     font-weight: bold;
   }
+  .lang-switch {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .lang-switch:hover {
+    background: rgba(255,255,255,0.4);
+  }
 </style>
 </head>
-<body>
-  <h1>⏰ اختلاف ساعت ایران و آلمان</h1>
+<body lang="fa">
+  <button class="lang-switch" onclick="toggleLanguage()">🇩🇪 Deutsch</button>
+  <h1 id="title">⏰ اختلاف ساعت ایران و آلمان</h1>
   <div class="clock-container">
     <div class="clock">
-      <h2>🇮🇷 ایران (Tehran)</h2>
+      <h2 id="iran-label">🇮🇷 ایران (Tehran)</h2>
       <div id="iran-time" class="time"></div>
     </div>
     <div class="clock">
-      <h2>🇩🇪 آلمان (Berlin)</h2>
+      <h2 id="germany-label">🇩🇪 آلمان (Berlin)</h2>
       <div id="germany-time" class="time"></div>
     </div>
   </div>
@@ -54,11 +76,9 @@
 function updateClocks() {
   const now = new Date();
 
- 
   const germanyTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Berlin" }));
   const germanyHours = germanyTime.getHours().toString().padStart(2, "0");
   const germanyMinutes = germanyTime.getMinutes().toString().padStart(2, "0");
-
 
   const iranTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tehran" }));
   const iranHours = iranTime.getHours().toString().padStart(2, "0");
@@ -66,6 +86,25 @@ function updateClocks() {
 
   document.getElementById("germany-time").textContent = `${germanyHours}:${germanyMinutes}`;
   document.getElementById("iran-time").textContent = `${iranHours}:${iranMinutes}`;
+}
+
+function toggleLanguage() {
+  const body = document.body;
+  const lang = body.getAttribute("lang");
+
+  if (lang === "fa") {
+    body.setAttribute("lang", "de");
+    document.getElementById("title").textContent = "⏰ Zeitunterschied Iran und Deutschland";
+    document.getElementById("iran-label").textContent = "🇮🇷 Iran (Teheran)";
+    document.getElementById("germany-label").textContent = "🇩🇪 Deutschland (Berlin)";
+    document.querySelector(".lang-switch").textContent = "🇮🇷 فارسی";
+  } else {
+    body.setAttribute("lang", "fa");
+    document.getElementById("title").textContent = "⏰ اختلاف ساعت ایران و آلمان";
+    document.getElementById("iran-label").textContent = "🇮🇷 ایران (Tehran)";
+    document.getElementById("germany-label").textContent = "🇩🇪 آلمان (Berlin)";
+    document.querySelector(".lang-switch").textContent = "🇩🇪 Deutsch";
+  }
 }
 
 setInterval(updateClocks, 1000);
